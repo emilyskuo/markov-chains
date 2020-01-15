@@ -104,26 +104,17 @@ def make_text(chains):
     current_key = choice(list_of_chains_keys)
     word_chain.extend(list(current_key))
 
-
-
-
-    # print("initial", initial_key)
-    # print("word_chain", word_chain)
-
-
-    # choice(chains[(current_key)])
-
     while current_key in chains:
-
-        current_key = tuple(word_chain[-2:])
 
         new_word = choice(chains[current_key])
         word_chain.append(new_word)
 
+        current_key = tuple(word_chain[-2:])
+
     return " ".join(word_chain)
 
 
-input_path = "green-eggs.txt"
+input_path = "gettysburg.txt"
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
@@ -131,9 +122,7 @@ input_text = open_and_read_file(input_path)
 # Get a Markov chain
 chains = make_chains(input_text)
 
-# print(chains)
-# # # Produce random text
-# random_text = make_text(chains)
+# Produce random text
+random_text = make_text(chains)
 
-# # print(random_text)
-print(make_text(chains))
+print(random_text)
