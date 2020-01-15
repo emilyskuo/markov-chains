@@ -1,9 +1,10 @@
 """Generate Markov text from text files."""
 
 from random import choice
+from sys import argv
 
 
-def open_and_read_file(file_path):
+def open_and_read_file():
     """Take file path as string; return text as string.
 
     Takes a string that is a file path, opens the file, and turns
@@ -11,15 +12,20 @@ def open_and_read_file(file_path):
     """
 
     # your code goes here
-    text_file = open(file_path)
-    new_text = (text_file.read())
-    new_text = new_text.rstrip()
+
+    combined_input_text = ""
+
+    for arg in argv[1:]:
+        text_file = open(arg)
+        new_text = (text_file.read())
+        new_text = new_text.rstrip()
+        combined_input_text += new_text
 
 
-    return new_text
+    return combined_input_text
 
 
-def make_chains(text_string):
+def make_chains(text_string, n_gram):
     """Take input text as string; return dictionary of Markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -47,51 +53,18 @@ def make_chains(text_string):
     chains = {}
 
     text_string = text_string.split()
-    # key_list = []
-    # list_of_values = []
 
-    for idx in range(len(text_string)-2):
-        key_bigram_tuple = (text_string[idx], text_string[idx+1])
-        # key_list.append(key_bigram_tuple)
-        value_for_bigram_tuple = text_string[idx+2]
+    for idx in range(len(text_string)-n_gram):
+        key_ngram_tuple = tuple(text_string[idx:idx+n_gram])
+        value_for_ngram_tuple = text_string[idx+n_gram]
 
-        if chains.get(key_bigram_tuple) is None:
-            chains[key_bigram_tuple] = [value_for_bigram_tuple]
+        if chains.get(key_ngram_tuple) is None:
+            chains[key_ngram_tuple] = [value_for_ngram_tuple]
         else:
-            chains[key_bigram_tuple].append(value_for_bigram_tuple)
+            chains[key_ngram_tuple].append(value_for_ngram_tuple)
 
 
     return chains
-        # print(key_bigram_tuple, value_for_bigram_tuple)
-
-    # if key_list.count(key) > 1:
-    #     list_of_values.append(value_for_bigram_tuple)
-    #     print(list_of_values)
-
-
-
-    #chains[key_bigram_tuple].append(value_for_bigram_tuple)
-
-    # else:
-    #     chains[key_bigram_tuple] = value_for_bigram_tuple
-
-
-
-    # key_list.append(key_bigram_tuple)
-
-    # value_for_bigram_tuple = []
-    # value_for_bigram_tuple.append(text_string[idx+2])
-
-    # print(value_for_bigram_tuple)
-    #chains[key_bigram_tuple] = value_for_bigram_tuple
-
-
-    # key for  in chains 
-
-
-    # your code goes here
-
-    # return chains
 
 
 def make_text(chains):
@@ -117,12 +90,13 @@ def make_text(chains):
 input_path = "gettysburg.txt"
 
 # Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+input_text = open_and_read_file()
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(input_text, 3)
 
+print(chains)
 # Produce random text
-random_text = make_text(chains)
+# random_text = make_text(chains)
 
-print(random_text)
+# print(random_text)
