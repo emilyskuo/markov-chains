@@ -47,20 +47,30 @@ def make_chains(text_string):
     chains = {}
 
     text_string = text_string.split()
-    key_list = []
-    list_of_values = []
+    # key_list = []
+    # list_of_values = []
 
     for idx in range(len(text_string)-2):
         key_bigram_tuple = (text_string[idx], text_string[idx+1])
-        key_list.append(key_bigram_tuple)
+        # key_list.append(key_bigram_tuple)
         value_for_bigram_tuple = text_string[idx+2]
-        
+
+        if chains.get(key_bigram_tuple) is None:
+            chains[key_bigram_tuple] = [value_for_bigram_tuple]
+        else:
+            chains[key_bigram_tuple].append(value_for_bigram_tuple)
+
+
+    return chains
         # print(key_bigram_tuple, value_for_bigram_tuple)
 
-    if key_list.count(key) > 1:
-        list_of_values.append(value_for_bigram_tuple)
-        print(list_of_values)
+    # if key_list.count(key) > 1:
+    #     list_of_values.append(value_for_bigram_tuple)
+    #     print(list_of_values)
 
+
+
+    #chains[key_bigram_tuple].append(value_for_bigram_tuple)
 
     # else:
     #     chains[key_bigram_tuple] = value_for_bigram_tuple
@@ -102,6 +112,7 @@ input_text = open_and_read_file(input_path)
 # Get a Markov chain
 chains = make_chains(input_text)
 
+print(chains)
 # # Produce random text
 # random_text = make_text(chains)
 
