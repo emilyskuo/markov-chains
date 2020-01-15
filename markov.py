@@ -99,25 +99,28 @@ def make_text(chains):
 
     word_chain = []
 
-
-    # your code goes here
+    # Choose a random tuple to start the chain
     list_of_chains_keys = list(chains.keys())
-    initial_key = choice(list_of_chains_keys)
-    word_chain.extend(list(initial_key))
+    current_key = choice(list_of_chains_keys)
+    word_chain.extend(list(current_key))
 
 
 
 
-    print("initial", initial_key)
-    print("word_chain", word_chain)
+    # print("initial", initial_key)
+    # print("word_chain", word_chain)
 
 
-    choice(chains[(current_key)])
+    # choice(chains[(current_key)])
 
-    current_key = tuple(word_chain[-2:])
+    while current_key in chains:
 
+        current_key = tuple(word_chain[-2:])
 
-    # return " ".join(words)
+        new_word = choice(chains[current_key])
+        word_chain.append(new_word)
+
+    return " ".join(word_chain)
 
 
 input_path = "green-eggs.txt"
@@ -133,4 +136,4 @@ chains = make_chains(input_text)
 # random_text = make_text(chains)
 
 # # print(random_text)
-make_text(chains)
+print(make_text(chains))
