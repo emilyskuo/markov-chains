@@ -105,10 +105,16 @@ def make_text(chains):
     initial_key = choice(list_of_chains_keys)
     word_chain.extend(list(initial_key))
 
+
+
+
     print("initial", initial_key)
     print("word_chain", word_chain)
 
 
+    choice(chains[(current_key)])
+
+    current_key = tuple(word_chain[-2:])
 
 
     # return " ".join(words)
